@@ -24,16 +24,23 @@ double to_24_hour_clock(double hours);
 //testing function for to_24_hour_clock
 void run_tests_to_24_hour_clock();
 
-
 //calculates hours elapsed since midnight ( time is given in seconds )
-double get_hours(double time);
+int get_hours(double time);
+
+//testing function for get_hours
+void run_tests_get_hours();
 
 //calculates minutes elapsed since midnight ( time is given in seconds )
-double get_minutes(double time);
+int get_minutes(double time);
+
+//testing function for get_minutes
+void run_tests_get_minutes();
 
 //calculates seconds elapsed since midnight ( time is given in seconds )
-double get_seconds(double time);
+int get_seconds(double time);
 
+//testing function for get_seconds
+void run_tests_get_seconds();
 
 // time to utc
 double time_to_utc(int utc_offset, double time);

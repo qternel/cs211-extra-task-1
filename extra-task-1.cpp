@@ -64,24 +64,6 @@ void run_tests_to_24_hour_clock() {
 	assert(fabs(to_24_hour_clock(28.5) - 4.5) < DBL_EPSILON);
 }
 
-//calculates hours elapsed since midnight ( time is given in seconds )
-double get_hours(double time) {
-	assert(time >= 0);
-	return hours_difference(0.0, time);
-}
-
-//calculates minutes elapsed since midnight ( time is given in seconds )
-double get_minutes(double time) {
-	assert(time >= 0);
-	return (time - get_hours(time) * 3600) / 60;
-}
-
-//calculates seconds elapsed since midnight ( time is given in seconds )
-double get_seconds(double time) {
-	assert(time >= 0);
-	return (time - get_hours(time) * 3600 - get_minutes(time) * 60);
-}
-
 /*
 	Implement three functions
 		* get_hours
@@ -103,6 +85,55 @@ double get_seconds(double time) {
 	it is currently 01:03:20 (hh:mm:ss).
 */
 
+//calculates hours elapsed since midnight ( time is given in seconds )
+int get_hours(double time) {
+	assert(time >= 0);
+	return hours_difference(0.0, time);
+}
+
+//testing function for get hours
+void run_tests_get_hours() {
+	assert(get_hours(3800) == 1);
+	assert(get_hours(9000) == 2);
+	assert(get_hours(3600 * 4 - 1) == 3);
+	assert(get_hours(3600 * 4 + 1) == 4);
+	assert(get_hours(3600 * 5 + 999) == 5);
+	assert(get_hours(5) == 0);
+}
+
+
+//calculates minutes elapsed since midnight ( time is given in seconds )
+int get_minutes(double time) {
+	assert(time >= 0);
+	return (time - get_hours(time) * 3600) / 60;
+}
+
+
+//testing function for get_minutes
+void run_tests_get_minutes() {
+	assert(get_minutes(3800) == 3);
+	assert(get_minutes(7201) == 0);
+	assert(get_minutes(7263) == 1);
+	assert(get_minutes(7199) == 59);
+	assert(get_minutes(7139) == 58);
+	assert(get_minutes(59) == 0);
+}
+
+//calculates seconds elapsed since midnight ( time is given in seconds )
+int get_seconds(double time) {
+	assert(time >= 0);
+	return (time - get_hours(time) * 3600 - get_minutes(time) * 60);
+}
+
+//testing function for get_seconds
+void run_tests_get_seconds() {
+	assert(get_seconds(3800) == 20);
+	assert(get_seconds(59) == 59);
+	assert(get_seconds(60) == 0);
+	assert(get_seconds(125) == 5);
+	assert(get_seconds(3629) == 29);
+	assert(get_seconds(7389) == 9);
+}
 
 //time to utc
 double time_to_utc(int utc_offset, double time)
@@ -126,7 +157,6 @@ void run_tests_time_to_utc() {
 double time_from_utc(int utc_offset, double time)
 {
 	return time_to_utc(-utc_offset, time);
-
 }
 
 //testing function for time_from_utc
@@ -139,6 +169,4 @@ void run_tests_time_from_utc() {
 	assert(fabs(time_from_utc(-1, 0.0) - 23.0) < DBL_EPSILON);
 	assert(fabs(time_from_utc(-1, 23.0) - 22.0) < DBL_EPSILON);
 	assert(fabs(time_from_utc(+1, 23.0)) < DBL_EPSILON);
-
 }
-
